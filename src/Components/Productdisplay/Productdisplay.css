@@ -68,14 +68,21 @@ font-weight: 600;
 }
 .productdisplay-right-size div{
     padding: 18px 24px;
-    background: #fbfbfb;
+    background: white;
     border:1px solid #ebebeb;
     border-radius: 3px;
     cursor: pointer;
-    box-shadow: #1c1c1c;
+    box-shadow: #ede8e8;
 }
+body .dark-mode .size p{
+    
+    color: rgb(18, 17, 17); /* Adjust text color to be visible in dark mode */
+  }
 .productdisplay-right-size div:hover{
     background-color: #aaaaaa;
+}
+body .dark-mode .productdisplay-right h1{
+    color: white    ;
 }
 .initalcart{
     padding: 20px 40px;
@@ -107,6 +114,9 @@ font-weight: 600;
     border-radius: 4px; 
     transition: background-color 0.3s, border 0.3s; 
 
+  }
+  body .dark-mode .cartincrement span{
+    color: white;
   }
   
   .cartitem:hover {

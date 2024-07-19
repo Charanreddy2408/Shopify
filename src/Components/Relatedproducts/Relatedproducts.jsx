@@ -1,10 +1,13 @@
 import React from 'react'
 import './Relatedproducts.css'
 import data_products from '../Assests/data'
+import { ThemeContext } from '../ThemeContext/ThemeContext';
 import Item1 from '../Items1/Item1'
+import { useContext } from 'react';
 const Relatedproducts = () => {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className='relatedproducts'>
+    <div className={`relatedproducts ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <h1>Related Products</h1>
       <hr />
       <div className="relatedproducts-item">

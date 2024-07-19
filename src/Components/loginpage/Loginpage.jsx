@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import "./Loginpage.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { useContext } from "react";
+import { ThemeContext } from '../ThemeContext/ThemeContext';
 
 const Loginpage = () => {
   const { addToast } = useToasts();
@@ -12,9 +14,9 @@ const Loginpage = () => {
     email: "",
     password: "",
   });
-  const [passwordError, setPasswordError] = useState("");
-  const [fieldError, setFieldError] = useState("");
+  const [errors, setErrors] = useState({});
   const [visible, setVisible] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,14 +24,41 @@ const Loginpage = () => {
       ...data,
       [name]: value,
     });
+
+    // Clear error messages when the user starts typing
+    setErrors({
+      ...errors,
+      [name]: "",
+    });
+  };
+
+  const validate = () => {
+    let validationErrors = {};
+
+    if (!data.name) {
+      validationErrors.name = "Name is required";
+    }
+
+    if (!data.email) {
+      validationErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      validationErrors.email = "Email is invalid";
+    }
+
+    if (!data.password) {
+      validationErrors.password = "Password is required";
+    }
+
+    return validationErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (data.name === "" || data.email === "" || data.password === "") {
-      setFieldError("Fields cannot be empty");
-      addToast("Fields cannot be empty", { appearance: "error" });
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      addToast("Please correct the highlighted errors", { appearance: "error",autoDismissTimeout: 3000,  autoDismiss: true });
       return;
     }
 
@@ -41,7 +70,7 @@ const Loginpage = () => {
         user.email === data.email &&
         user.password === data.password
       ) {
-        addToast("Login Successful", { appearance: "success" });
+        addToast("Login Successful", { appearance: "success",autoDismissTimeout: 3000,  autoDismiss: true });
         navigate("/home");
         localStorage.setItem(
           "login",
@@ -52,12 +81,12 @@ const Loginpage = () => {
           })
         );
       } else {
-        setPasswordError("Invalid credentials");
-        addToast("Invalid credentials", { appearance: "error" });
+        setErrors({ password: "Invalid credentials" });
+        addToast("Invalid credentials", { appearance: "error",autoDismissTimeout: 3000,  autoDismiss: true});
       }
     } else {
-      setPasswordError("User does not exist");
-      addToast("User does not exist", { appearance: "error" });
+      setErrors({ password: "User does not exist" });
+      addToast("User does not exist", { appearance: "error",autoDismissTimeout: 3000,  autoDismiss: true });
     }
   };
 
@@ -66,7 +95,7 @@ const Loginpage = () => {
   };
 
   return (
-    <div className="logindetails">
+    <div className={`logindetails ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <div className="logincontainer">
         <h1>Login</h1>
         <div className="loginfields">
@@ -77,6 +106,8 @@ const Loginpage = () => {
             value={data.name}
             onChange={handleInputChange}
           />
+          {errors.name && <p className="error">{errors.name}</p>}
+
           <input
             type="email"
             name="email"
@@ -85,6 +116,8 @@ const Loginpage = () => {
             value={data.email}
             onChange={handleInputChange}
           />
+          {errors.email && <p className="error">{errors.email}</p>}
+
           <div className="pass">
             <input
               type={visible ? "text" : "password"}
@@ -97,8 +130,8 @@ const Loginpage = () => {
               {visible ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
-          {passwordError && <p className="error">{passwordError}</p>}
-          {fieldError && <p className="error">{fieldError}</p>}
+          {errors.password && <p className="error">{errors.password}</p>}
+
           <button onClick={handleSubmit}>Continue</button>
         </div>
         <p className="signup">

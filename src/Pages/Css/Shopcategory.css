@@ -17,6 +17,32 @@
     border: 1px solid #888;
 
 }
+.sort-dropdown {
+    width: 120px;
+    padding: 5px;
+    font-size: 16px;
+    color: #db6868;
+    background-color: #aea7a7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .sort-dropdown:hover {
+    border-color: #888;
+  }
+  
+  .sort-dropdown:focus {
+    border-color: #555;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sort-dropdown option {
+    padding: 10px;
+  }
+  
 .shopcategory-indexsort p span{
      font-weight:600;
      margin-left: -30px;
@@ -29,4 +55,12 @@
     row-gap: 80px;
     justify-content: center;
 
+}
+#sort{
+    outline: none;
+    border: 0px;
+}
+#sort option{
+    background-color:rgb(83, 81, 81);
+    color: white;
 }

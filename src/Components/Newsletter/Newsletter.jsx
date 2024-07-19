@@ -19,10 +19,10 @@ const Newsletter = () => {
   const handleClick = (e) => {
     e.preventDefault();
     if(info.email===""){
-      addToast("fields cannot be empty",{appearance:'error'})
+      addToast("fields cannot be empty",{appearance:'error',autoDismissTimeout: 3000,  autoDismiss: true})
     }
     else{
-    addToast("Subscription Succesfull",{appearance:'success'})
+    addToast("Subscription Succesfull",{appearance:'success',autoDismissTimeout: 3000,  autoDismiss: true})
     }
   };
 

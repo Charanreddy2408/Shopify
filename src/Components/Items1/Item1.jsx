@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { Link } from 'react-router-dom';
 import "./Item1.css";
 import Shimmer from '../shimmer/shimmer'; 
+import { ThemeContext } from '../ThemeContext/ThemeContext';
 
 const Item1 = (props) => {
   const [loading, setLoading] = useState(true);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     
@@ -14,7 +16,7 @@ const Item1 = (props) => {
   }, []);
 
   return (
-    <div className="item">
+    <div className={`item1 ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <div className="item1">
         <Link to={`/product/${props.id}`}>
           {loading ? (

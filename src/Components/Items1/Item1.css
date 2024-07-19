@@ -1,11 +1,13 @@
 .item{
     width: 350px;
-   /* display: flex; */
+   
 
 }
 
 .item p{
     margin: 6px 0px;
+    padding-left: 5px;
+    padding-right: 7px;
 }
 .prices{
     display: flex;
@@ -28,4 +30,10 @@
 .item:hover{
     transform: scale(1.05);
     transition: 0.6s;
+}
+body .dark-mode .oldprice{
+    color:white;
+}
+body .dark-mode .newprice{
+    color:white;
 }

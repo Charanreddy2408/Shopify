@@ -22,3 +22,6 @@
     display: flex;
     gap:30px;
 }
+body .dark-mode.relatedproducts h1{
+    color: white;
+}

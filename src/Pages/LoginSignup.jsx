@@ -3,6 +3,8 @@ import { useToasts } from "react-toast-notifications";
 import { Link, useNavigate } from "react-router-dom";
 import "./Css/Loginsignup.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { useContext } from "react";
+import { ThemeContext } from '../Components/ThemeContext/ThemeContext';
 
 const LoginSignup = () => {
   const { addToast } = useToasts();
@@ -16,8 +18,8 @@ const LoginSignup = () => {
   });
   const [visible, setVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
-  const [fieldError, setFieldError] = useState("");
+  const [errors, setErrors] = useState({});
+  const { theme } = useContext(ThemeContext);
 
   const handleVisible = () => {
     setVisible(!visible);
@@ -34,34 +36,48 @@ const LoginSignup = () => {
       [name]: type === "checkbox" ? checked : value,
     });
 
-    if (name === "password" || name === "ConfirmPassword") {
-      setPasswordError("");
+    // Clear error messages when the user starts typing
+    setErrors({
+      ...errors,
+      [name]: "",
+    });
+  };
+
+  const validate = () => {
+    let validationErrors = {};
+
+    if (!information.name) {
+      validationErrors.name = "Name is required";
     }
-    if (
-      name === "name" ||
-      name === "email" ||
-      name === "password" ||
-      name === "ConfirmPassword"
-    ) {
-      setFieldError("");
+
+    if (!information.email) {
+      validationErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(information.email)) {
+      validationErrors.email = "Email is invalid";
     }
+
+    if (!information.password) {
+      validationErrors.password = "Password is required";
+    } else if (information.password.length < 6) {
+      validationErrors.password = "Password must be at least 6 characters long";
+    }
+
+    if (!information.ConfirmPassword) {
+      validationErrors.ConfirmPassword = "Confirm Password is required";
+    } else if (information.password !== information.ConfirmPassword) {
+      validationErrors.ConfirmPassword = "Passwords must match";
+    }
+
+    return validationErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (information.password !== information.ConfirmPassword) {
-      setPasswordError("Passwords must match.");
-      addToast("Passwords must match", { appearance: "error" });
-      return;
-    }
-    if (
-      information.name === "" ||
-      information.email === "" ||
-      information.password === ""
-    ) {
-      setFieldError("Fields cannot be empty");
-      addToast("Fields cannot be empty", { appearance: "error" });
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      addToast("Please correct the highlighted errors", { appearance: "error", autoDismissTimeout: 3000, autoDismiss: true });
       return;
     }
 
@@ -83,7 +99,7 @@ const LoginSignup = () => {
       })
     );
 
-    addToast("Signup Successful", { appearance: "success" });
+    addToast("Signup Successful", { appearance: "success", autoDismissTimeout: 3000, autoDismiss: true });
 
     setInformation({
       name: "",
@@ -92,11 +108,11 @@ const LoginSignup = () => {
       ConfirmPassword: "",
       agree: false,
     });
-    navigate("/home");
+    navigate("/");
   };
 
   return (
-    <div className="loginsignup">
+    <div className={`loginsignup ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <div className="loginsignupcontainer">
         <h1>Sign Up</h1>
         <div className="loginsignupfields">
@@ -107,6 +123,8 @@ const LoginSignup = () => {
             value={information.name}
             onChange={handleInputChange}
           />
+          {errors.name && <p className="error">{errors.name}</p>}
+
           <input
             type="email"
             name="email"
@@ -115,6 +133,8 @@ const LoginSignup = () => {
             value={information.email}
             onChange={handleInputChange}
           />
+          {errors.email && <p className="error">{errors.email}</p>}
+
           <div className="pass">
             <input
               type={visible ? "text" : "password"}
@@ -127,6 +147,8 @@ const LoginSignup = () => {
               {visible ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
+          {errors.password && <p className="error">{errors.password}</p>}
+
           <div className="pass">
             <input
               type={confirmVisible ? "text" : "password"}
@@ -139,8 +161,8 @@ const LoginSignup = () => {
               {confirmVisible ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
-          {passwordError && <p className="error">{passwordError}</p>}
-          {fieldError && <p className="error">{fieldError}</p>}
+          {errors.ConfirmPassword && <p className="error">{errors.ConfirmPassword}</p>}
+
           <button
             style={{ opacity: information.agree ? 1 : 0.5 }}
             disabled={!information.agree}

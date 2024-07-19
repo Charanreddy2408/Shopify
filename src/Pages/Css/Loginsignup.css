@@ -1,9 +1,10 @@
 .loginsignup {
     width: 100%;
     height: 750px;
-    background: #fce3fc;
+    background: #848384;
     padding-top: 100px;
     margin-bottom: 100px;
+    transition: background 0.3s, color 0.3s;
 }
 
 .loginsignupcontainer {
@@ -13,10 +14,12 @@
     margin: auto;
     padding: 40px 60px;
     margin-top: -50px;
+    transition: background 0.3s, color 0.3s;
 }
 
 .loginsignupcontainer h1 {
     margin: 20px 0px;
+    transition: color 0.3s;
 }
 
 .loginsignupfields {
@@ -34,6 +37,7 @@
     outline: none;
     color: #5c5c5c;
     font-size: 18px;
+    transition: background 0.3s, color 0.3s, border 0.3s;
 }
 
 .loginsignupfields button {
@@ -46,6 +50,7 @@
     font-size: 24px;
     font-weight: 500;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 .loginsignup-login {
@@ -53,6 +58,7 @@
     color: #5c5c5c;
     font-size: 18px;
     font-weight: 500;
+    transition: color 0.3s;
 }
 
 .new-login {
@@ -94,4 +100,40 @@
     cursor: pointer;
     font-size: 24px;
     color: #5c5c5c;
+    transition: color 0.3s;
+}
+
+body .dark-mode.loginsignup {
+    background: #2c2c2c;
+}
+
+body .dark-mode .loginsignupcontainer {
+    background: #333;
+    color: white;
+}
+
+body .dark-mode .loginsignupcontainer h1 {
+    color: white;
+}
+
+body .dark-mode .loginsignupfields input {
+    background: #444;
+    color: white;
+    border: 1px solid #555;
+}
+
+body .dark-mode .loginsignupfields button {
+    background: #ff5656;
+}
+
+body .dark-mode .loginsignup-login {
+    color: #ccc;
+}
+
+body .dark-mode .loginsignup-agree {
+    color: #ccc;
+}
+
+body .dark-mode .eye-icon {
+    color: #ccc;
 }

@@ -1,17 +1,24 @@
+// src/components/Navbar.js
+
 import React, { useContext, useState, useEffect } from 'react';
-import { Link, Router, useNavigate, useParams, useRoutes } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
 import cart_icon from '../Assests/cart_icon.png';
 import { Shopcontext } from '../../context/Shopcontext';
+import { ThemeContext } from '../ThemeContext/ThemeContext';
+import { FaShoppingCart } from "react-icons/fa";
+import { FaToggleOff } from "react-icons/fa";
+import { FaToggleOn } from "react-icons/fa";
 
 const Navbar = () => {
   const { addToast } = useToasts();
-  const params = useParams()
+  const params = useParams();
   const navigate = useNavigate();
   const [Menu, setMenu] = useState("shop");
   const { gettotalcartitems } = useContext(Shopcontext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -25,31 +32,32 @@ const Navbar = () => {
     addToast("Logged out successfully", { appearance: "success" });
     navigate("/login"); 
   };
+  
 
   return (
-    <div className='navbar'>
+    <div className={`navbar ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <div className='nav-logo'>
-        <Link style={{ textDecoration: "none" }} to="/home">
-          <img onClick={() => setMenu("shop")} src={logo} alt="" />
+        <Link style={{ textDecoration: "none" }} to="/">
+          <img onClick={() => setMenu("shop")} src={logo} alt="Shopper Logo" />
         </Link>
         <p>Shopper</p>
       </div>
       <ul className='menu-bar'>
         <li onClick={() => setMenu("shop")}>
-          <Link style={{ textDecoration: "none" }} to="/home">Shop</Link>
-          {Menu === "shop" ? <hr /> : <></>}
+          <Link className='navcontent' style={{ textDecoration: "none" }} to="/">Shop</Link>
+          {Menu === "shop" && <hr />}
         </li>
         <li onClick={() => setMenu("men")}>
-          <Link style={{ textDecoration: "none" }} to="/men">Men</Link>
-          {Menu === "men" ? <hr /> : <></>}
+          <Link  className='navcontent' style={{ textDecoration: "none" }} to="/men">Men</Link>
+          {Menu === "men" && <hr />}
         </li>
         <li onClick={() => setMenu("women")}>
-          <Link style={{ textDecoration: "none" }} to="/women">Women</Link>
-          {Menu === "women" ? <hr /> : <></>}
+          <Link className='navcontent' style={{ textDecoration: "none" }} to="/women">Women</Link>
+          {Menu === "women" && <hr />}
         </li>
         <li onClick={() => setMenu("kids")}>
-          <Link style={{ textDecoration: "none" }} to="/kids">Kids</Link>
-          {Menu === "kids" ? <hr /> : <></>}
+          <Link className='navcontent' style={{ textDecoration: "none" }} to="/kids">Kids</Link>
+          {Menu === "kids" && <hr />}
         </li>
       </ul>
       <div className='cart'>
@@ -59,10 +67,14 @@ const Navbar = () => {
           <Link to="/login"><button className='login'>Login</button></Link>
         )}
         <Link to="/cart">
-          <img src={cart_icon} alt="Cart" />
+        {theme==='dark'?<FaShoppingCart size={30} color='white'/>:<FaShoppingCart size={30} color='black'/>}
+
         </Link>
         <div className='cart-count'>{gettotalcartitems()}</div>
       </div>
+      <button onClick={toggleTheme} className="theme-toggle-button">
+        {theme === 'light' ? <FaToggleOff size={30} /> : <FaToggleOn size={30}/>}
+      </button>
     </div>
   );
 }

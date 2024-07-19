@@ -2,9 +2,12 @@ import React from "react";
 import "./Newcollections.css";
 import Newcollection from "../Assests/new_collections";
 import Item1 from "../Items1/Item1";
+import { useContext } from "react";
+import { ThemeContext } from '../ThemeContext/ThemeContext';
 const Newcollections = () => {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className="Newcollections">
+    <div className={`Newcollections ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <h1>NEW COLLECTIONS</h1>
       <hr />
       <div className="collections">

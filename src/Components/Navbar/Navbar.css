@@ -6,7 +6,10 @@
   display: flex;
   justify-content: space-around;
   padding: 16px;
-  box-shadow: 0 1px 3px -2px black;
+  box-shadow: 0 1px 3px -2px rgb(12, 12, 12);
+}
+body .dark-mode.navbar{
+  box-shadow: 0 2px 3px -2px rgb(240, 237, 237);
 }
 
 .nav-logo {
@@ -19,7 +22,7 @@
   align-items: center;
   list-style: none;
   gap: 50px;
-  color: #626262;
+  color: #dad2d2;
   font-size: 20px;
   font-weight: 500px;
   cursor: pointer;
@@ -74,4 +77,23 @@
   margin-left: -45px;
   font-size: 14px;
   background-color: red;
+}
+
+.theme-toggle-button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.theme-toggle-button:hover {
+  text-decoration: underline;
+}
+body .dark-mode .nav-logo p{
+  color: white;
+}
+body .dark-mode .navcontent{
+  color: white;
 }

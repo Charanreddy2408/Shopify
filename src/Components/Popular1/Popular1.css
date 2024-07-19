@@ -1,24 +1,38 @@
-.popular{
+/* src/Popular1.css */
+
+.popular {
     display: flex;
     gap: 10px;
     flex-direction: column;
     align-items: center;
     height: 90vh;
-}
-.popular h1{
+  }
+  
+  .popular h1 {
     color: black;
     font-size: 50px;
     font-weight: 600;
-
-}
-.popular hr{
+  }
+  
+  body .dark-mode.popular h1 {
+    color: white; 
+  }
+  
+  .popular hr {
     width: 500px;
     height: 6px;
     border-radius: 10px;
     background: #252525;
-}
-.popular-item{
+  }
+  
+  body .dark-mode.popular hr {
+    background: white; /* Dark mode color */
+  }
+  
+  .popular-item {
     display: flex;
     gap: 20px;
     margin-top: 50px;
-} 
+    margin-left: 20px;
+  }
+  

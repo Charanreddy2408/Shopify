@@ -6,6 +6,7 @@ import { useToasts } from "react-toast-notifications";
 import offers from "../Assests/offers";
 import { Link } from "react-router-dom";
 import emailjs from "emailjs-com";
+import { ThemeContext } from '../ThemeContext/ThemeContext'; 
 
 const Cartitems = () => {
   const { addToast } = useToasts();
@@ -15,6 +16,7 @@ const Cartitems = () => {
   const [valid, setValid] = useState(false);
   const [discount, setDiscount] = useState();
   const [sendingEmail, setSendingEmail] = useState(false);
+  const { theme } = useContext(ThemeContext); 
 
   const handleInput = (e) => setPromo(e.target.value);
 
@@ -71,38 +73,36 @@ const Cartitems = () => {
         to_name: user.name,
         to_email: user.email,
         from_name: "charan",
-        // products: productItems, // Pass the HTML structure directly
+
         total_amount: discountedTotal,
       };
   
+      console.log('Template Params:', templateParams);
 
-console.log('Template Params:', templateParams);
+      try {
+        await emailjs.send(
+          "service_j1jadl7", 
+          "template_mcm58sj", 
+          templateParams,
+          "MU2-rw7oEId1SCy-x" 
+        );
 
-try {
-  await emailjs.send(
-    "service_j1jadl7", 
-    "template_mcm58sj", 
-    templateParams,
-    "MU2-rw7oEId1SCy-x" 
-  );
-
-  addToast("Order placed and confirmation email sent", {
-    appearance: "success",
-  });
-} catch (error) {
-  console.error("Error sending email:", error);
-  addToast("Error sending order confirmation email", {
-    appearance: "error",
-  });
-} finally {
-  setSendingEmail(false);
-}
-
+        addToast("Order placed and confirmation email sent", {
+          appearance: "success",
+        });
+      } catch (error) {
+        console.error("Error sending email:", error);
+        addToast("Error sending order confirmation email", {
+          appearance: "error",
+        });
+      } finally {
+        setSendingEmail(false);
+      }
     }
   };
 
   return (
-    <div className="cartitems">
+    <div className={`cartitems ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <div className="cartitems-format-main">
         <p>Products</p>
         <p>Title</p>
