@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import "./Loginpage.css";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { useContext } from "react";
 import { ThemeContext } from '../ThemeContext/ThemeContext';
 
 const Loginpage = () => {
-  const { addToast } = useToasts();
   const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
@@ -25,7 +24,6 @@ const Loginpage = () => {
       [name]: value,
     });
 
-    // Clear error messages when the user starts typing
     setErrors({
       ...errors,
       [name]: "",
@@ -58,7 +56,7 @@ const Loginpage = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      addToast("Please correct the highlighted errors", { appearance: "error",autoDismissTimeout: 3000,  autoDismiss: true });
+      toast.error("Please correct the highlighted errors", { autoClose: 3000 });
       return;
     }
 
@@ -70,7 +68,7 @@ const Loginpage = () => {
         user.email === data.email &&
         user.password === data.password
       ) {
-        addToast("Login Successful", { appearance: "success",autoDismissTimeout: 3000,  autoDismiss: true });
+        toast.success("Login Successful", { autoClose: 3000 });
         navigate("/home");
         localStorage.setItem(
           "login",
@@ -82,11 +80,11 @@ const Loginpage = () => {
         );
       } else {
         setErrors({ password: "Invalid credentials" });
-        addToast("Invalid credentials", { appearance: "error",autoDismissTimeout: 3000,  autoDismiss: true});
+        toast.error("Invalid credentials", { autoClose: 3000 });
       }
     } else {
       setErrors({ password: "User does not exist" });
-      addToast("User does not exist", { appearance: "error",autoDismissTimeout: 3000,  autoDismiss: true });
+      toast.error("User does not exist", { autoClose: 3000 });
     }
   };
 
@@ -141,6 +139,7 @@ const Loginpage = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };

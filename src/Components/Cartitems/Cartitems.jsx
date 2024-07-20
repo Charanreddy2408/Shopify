@@ -2,14 +2,14 @@ import React, { useState, useContext } from "react";
 import "./Cartitems.css";
 import { Shopcontext } from "../../context/Shopcontext";
 import removeicon from "../Assests/cart_cross_icon.png";
-import { useToasts } from "react-toast-notifications";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import offers from "../Assests/offers";
 import { Link } from "react-router-dom";
 import emailjs from "emailjs-com";
 import { ThemeContext } from '../ThemeContext/ThemeContext'; 
 
 const Cartitems = () => {
-  const { addToast } = useToasts();
   const { gettotalcartamount, all_product, cartItems, removefromcart } = useContext(Shopcontext);
   const [promo, setPromo] = useState("");
   const [discountedTotal, setDiscountedTotal] = useState(gettotalcartamount());
@@ -25,12 +25,12 @@ const Cartitems = () => {
     if (offer) {
       const discountAmount = (gettotalcartamount() * offer.discount) / 100;
       setDiscountedTotal(gettotalcartamount() - discountAmount);
-      addToast("Promo code applied!", { appearance: "success" });
+      toast.success("Promo code applied!", { autoClose: 3000 });
       setValid(true);
       setDiscount(offer.discount);
     } else {
       setDiscountedTotal(gettotalcartamount());
-      addToast("Invalid promo code!", { appearance: "error" });
+      toast.error("Invalid promo code!", { autoClose: 3000 });
       setValid(false);
     }
   };
@@ -47,7 +47,7 @@ const Cartitems = () => {
 
   const handleCheckoutClick = async () => {
     if (!checkLogin()) {
-      addToast("Login required to proceed to checkout", { appearance: "error" });
+      toast.error("Login required to proceed to checkout", { autoClose: 3000 });
     } else {
       setSendingEmail(true);
 
@@ -59,7 +59,6 @@ const Cartitems = () => {
         total: product.new_price * cartItems[product.id],
       }));
   
-      // Generating product list HTML
       const productItems = products.map((product) => `
         <li>
           ${product.name}<br>
@@ -73,7 +72,6 @@ const Cartitems = () => {
         to_name: user.name,
         to_email: user.email,
         from_name: "charan",
-
         total_amount: discountedTotal,
       };
   
@@ -87,14 +85,10 @@ const Cartitems = () => {
           "MU2-rw7oEId1SCy-x" 
         );
 
-        addToast("Order placed and confirmation email sent", {
-          appearance: "success",
-        });
+        toast.success("Order placed and confirmation email sent", { autoClose: 3000 });
       } catch (error) {
         console.error("Error sending email:", error);
-        addToast("Error sending order confirmation email", {
-          appearance: "error",
-        });
+        toast.error("Error sending order confirmation email", { autoClose: 3000 });
       } finally {
         setSendingEmail(false);
       }
@@ -103,6 +97,7 @@ const Cartitems = () => {
 
   return (
     <div className={`cartitems ${theme === 'dark' ? 'dark-mode' : ''}`}>
+      <ToastContainer />
       <div className="cartitems-format-main">
         <p>Products</p>
         <p>Title</p>

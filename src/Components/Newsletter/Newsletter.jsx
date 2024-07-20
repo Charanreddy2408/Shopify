@@ -1,9 +1,11 @@
+
+
 import React, { useState } from 'react';
 import './Newsletter.css';
-import { useToasts } from 'react-toast-notifications';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Newsletter = () => {
-  const {addToast}=useToasts()
   const [info, setInfo] = useState({
     email: "",
   });
@@ -18,16 +20,16 @@ const Newsletter = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    if(info.email===""){
-      addToast("fields cannot be empty",{appearance:'error',autoDismissTimeout: 3000,  autoDismiss: true})
-    }
-    else{
-    addToast("Subscription Succesfull",{appearance:'success',autoDismissTimeout: 3000,  autoDismiss: true})
+    if(info.email === "") {
+      toast.error("Fields cannot be empty", { autoClose: 3000 });
+    } else {
+      toast.success("Subscription Successful", { autoClose: 3000 });
     }
   };
 
   return (
     <div className='Newsletter'>
+      <ToastContainer />
       <h1>GET EXCLUSIVE OFFERS ON EMAIL</h1>
       <p>Subscribe to our newsletter and stay updated</p>
       <div>

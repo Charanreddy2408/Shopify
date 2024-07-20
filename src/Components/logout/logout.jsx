@@ -1,21 +1,24 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const LogoutButton = () => {
-  const { addToast } = useToasts();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("login");
-    addToast("Logout Successful", { appearance: "success" });
+    toast.success("Logout Successful", { autoClose: 3000 });
     navigate("/login"); 
   };
 
   return (
-    <button onClick={handleLogout} className="logout-button">
-      Logout
-    </button>
+    <>
+      <button onClick={handleLogout} className="logout-button">
+        Logout
+      </button>
+      <ToastContainer />
+    </>
   );
 };
 

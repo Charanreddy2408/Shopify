@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { useToasts } from "react-toast-notifications";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Css/Loginsignup.css";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import "./Css/Loginsignup.css"
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { useContext } from "react";
 import { ThemeContext } from '../Components/ThemeContext/ThemeContext';
 
 const LoginSignup = () => {
-  const { addToast } = useToasts();
   const navigate = useNavigate();
   const [information, setInformation] = useState({
     name: "",
@@ -77,7 +76,7 @@ const LoginSignup = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      addToast("Please correct the highlighted errors", { appearance: "error", autoDismissTimeout: 3000, autoDismiss: true });
+      toast.error("Please correct the highlighted errors", { autoClose: 3000 });
       return;
     }
 
@@ -99,7 +98,7 @@ const LoginSignup = () => {
       })
     );
 
-    addToast("Signup Successful", { appearance: "success", autoDismissTimeout: 3000, autoDismiss: true });
+    toast.success("Signup Successful", { autoClose: 3000 });
 
     setInformation({
       name: "",
@@ -187,6 +186,7 @@ const LoginSignup = () => {
           <p>By continuing, I agree to the terms of use and privacy policy</p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
