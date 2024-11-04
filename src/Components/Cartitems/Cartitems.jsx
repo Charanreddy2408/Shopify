@@ -4,7 +4,7 @@ import { Shopcontext } from "../../context/Shopcontext";
 import removeicon from "../Assests/cart_cross_icon.png";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import offers from "../Assests/offers";
+  import offers from "../Assests/offers";
 import { Link } from "react-router-dom";
 // import emailjs from "emailjs-com"; // Commented out for troubleshooting
 import { ThemeContext } from '../ThemeContext/ThemeContext'; 
