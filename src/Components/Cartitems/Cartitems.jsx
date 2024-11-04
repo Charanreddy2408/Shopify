@@ -4,7 +4,7 @@ import { Shopcontext } from "../../context/Shopcontext";
 import removeicon from "../Assests/cart_cross_icon.png";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import offers from "../Assests/offers"; // Keep this if offers are used
+import offers from "../Assests/offers"; // Kept as it's used for discounts
 import { Link } from "react-router-dom";
 import { ThemeContext } from '../ThemeContext/ThemeContext'; 
 
@@ -13,7 +13,7 @@ const Cartitems = () => {
   const [promo, setPromo] = useState("");
   const [discountedTotal, setDiscountedTotal] = useState(gettotalcartamount());
   const [valid, setValid] = useState(false);
-  const [discount, setDiscount] = useState();
+  const [discount, setDiscount] = useState(0);
   const [sendingEmail, setSendingEmail] = useState(false);
   const { theme } = useContext(ThemeContext); 
 
@@ -47,28 +47,41 @@ const Cartitems = () => {
   const handleCheckoutClick = async () => {
     if (!checkLogin()) {
       toast.error("Login required to proceed to checkout", { autoClose: 3000 });
-    } else {
-      setSendingEmail(true);
-
-      const user = JSON.parse(localStorage.getItem("login"));
-      const products = all_product.filter((product) => cartItems[product.id] > 0).map((product) => ({
-        name: product.name,
-        quantity: cartItems[product.id],
-        price: product.new_price,
-        total: product.new_price * cartItems[product.id],
-      }));
-  
-      const templateParams = {
-        to_name: user.name,
-        to_email: user.email,
-        from_name: "charan",
-        total_amount: discountedTotal,
-      };
-  
-      // console.log('Template Params:', templateParams); // Commented out to resolve the console warning
-
-      // Email sending logic can remain commented out for troubleshooting
+      return; // Early return if not logged in
     }
+
+    setSendingEmail(true);
+
+    const user = JSON.parse(localStorage.getItem("login"));
+    const products = all_product.filter((product) => cartItems[product.id] > 0).map((product) => ({
+      name: product.name,
+      quantity: cartItems[product.id],
+      price: product.new_price,
+      total: product.new_price * cartItems[product.id],
+    }));
+
+    // Commented out for now, remove if not needed
+    /*
+    const templateParams = {
+      to_name: user.name,
+      to_email: user.email,
+      from_name: "charan",
+      total_amount: discountedTotal,
+    };
+    */
+
+    // Uncomment for email functionality later
+    /*
+    try {
+      await emailjs.send("service_j1jadl7", "template_mcm58sj", templateParams, "MU2-rw7oEId1SCy-x");
+      toast.success("Order placed and confirmation email sent", { autoClose: 3000 });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Error sending order confirmation email", { autoClose: 3000 });
+    } finally {
+      setSendingEmail(false);
+    }
+    */
   };
 
   return (
@@ -89,7 +102,7 @@ const Cartitems = () => {
           <div key={product.id}>
             <div className="cartitems-format cartitems-format-main">
               <Link to={`/product/${product.id}`}>
-                <img className="carticon-product-icon" src={product.image} alt="" />
+                <img className="carticon-product-icon" src={product.image} alt={product.name} />
               </Link>
               <p>{product.name}</p>
               <p>${product.new_price}</p>
@@ -121,7 +134,7 @@ const Cartitems = () => {
               <p>Free</p>
             </div>
             <hr />
-            {valid && discount != null && (
+            {valid && (
               <>
                 <div className="cartitems-total-item">
                   <p>Offer Discount</p>
@@ -130,7 +143,6 @@ const Cartitems = () => {
                 <hr />
               </>
             )}
-
             <div className="cartitems-total-item">
               <h3>Total</h3>
               <h3>${discountedTotal}</h3>
@@ -165,3 +177,4 @@ const Cartitems = () => {
 };
 
 export default Cartitems;
+
