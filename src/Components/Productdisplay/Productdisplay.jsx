@@ -7,7 +7,7 @@ import { ThemeContext } from '../ThemeContext/ThemeContext';
 const Productdisplay = (props) => {
   const { theme } = useContext(ThemeContext);
   const { product } = props;
-  const { addtocart,removefromcart,gettotalcartitems,cartItems} = useContext(Shopcontext);
+  const { addtocart,removefromcart,cartItems} = useContext(Shopcontext);
   return (
     <div className={`productdisplay ${theme === 'dark' ? 'dark-mode' : ''}`}>
       <div className="productdisplay-left">

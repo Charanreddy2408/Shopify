@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import  { useState, useContext } from "react";
 import "./Cartitems.css";
 import { Shopcontext } from "../../context/Shopcontext";
 import removeicon from "../Assests/cart_cross_icon.png";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import offers from "../Assests/offers";
+// import offers from "../Assests/offers";
 import { Link } from "react-router-dom";
 // import emailjs from "emailjs-com"; // Commented out for troubleshooting
 import { ThemeContext } from '../ThemeContext/ThemeContext'; 
@@ -59,14 +59,14 @@ const Cartitems = () => {
         total: product.new_price * cartItems[product.id],
       }));
   
-      const productItems = products.map((product) => `
-        <li>
-          ${product.name}<br>
-          Quantity: ${product.quantity}<br>
-          Unit Price: $${product.price}<br>
-          Total: $${product.total}
-        </li>
-      `).join('');
+      // const productItems = products.map((product) => `
+      //   <li>
+      //     ${product.name}<br>
+      //     Quantity: ${product.quantity}<br>
+      //     Unit Price: $${product.price}<br>
+      //     Total: $${product.total}
+      //   </li>
+      // `).join('');
   
       const templateParams = {
         to_name: user.name,

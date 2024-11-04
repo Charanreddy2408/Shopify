@@ -6,6 +6,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Navbar.css';
 import logo from '../Assests/logo.png';
+<<<<<<< HEAD
+=======
+// import cart_icon from '../Assests/cart_icon.png';
+>>>>>>> 4c076519e9149467a2e1a0a7ebb10c2c1193675c
 import { Shopcontext } from '../../context/Shopcontext';
 import { ThemeContext } from '../ThemeContext/ThemeContext';
 import { FaShoppingCart, FaToggleOff, FaToggleOn } from "react-icons/fa";
