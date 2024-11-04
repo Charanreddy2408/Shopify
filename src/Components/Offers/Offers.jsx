@@ -1,4 +1,3 @@
-
 import './Offers.css';
 import { useNavigate } from 'react-router-dom';
 import exclusive_image from '../Assests/exclusive_image.png';

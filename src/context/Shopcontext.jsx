@@ -1,12 +1,9 @@
 import React, { useState, createContext } from "react";
 import all_product from "../Components/Assests/all_product";
-
-
-import Cartitems from "../Components/Cartitems/Cartitems";
-// import { useSearchParams } from "react-router-dom";
-// import Cartitems from "../Components/Cartitems/Cartitems";
+// Removed Cartitems import since it's not used
 
 export const Shopcontext = createContext(null);
+
 const getDefaultcart = () => {
   let cart = {};
   for (let i = 0; i < all_product.length + 1; i++) {
@@ -14,16 +11,18 @@ const getDefaultcart = () => {
   }
   return cart;
 };
+
 const Shopcontextprovider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultcart());
 
   const addtocart = (itemid) => {
     setCartItems(() => ({ ...cartItems, [itemid]: cartItems[itemid] + 1 }));
   };
+
   const removefromcart = (itemid) => {
     setCartItems((prev) => ({ ...prev, [itemid]: prev[itemid] - 1 }));
-    
   };
+
   const gettotalcartamount = () => {
     let totalamount = 0;
     for (let item in cartItems) {
@@ -36,6 +35,7 @@ const Shopcontextprovider = (props) => {
     }
     return totalamount;
   };
+
   const gettotalcartitems = () => {
     let totalsize = 0;
 
@@ -46,6 +46,7 @@ const Shopcontextprovider = (props) => {
     }
     return totalsize;
   };
+
   const contextvalue = {
     gettotalcartitems,
     gettotalcartamount,
@@ -54,10 +55,12 @@ const Shopcontextprovider = (props) => {
     addtocart,
     removefromcart,
   };
+
   return (
     <Shopcontext.Provider value={contextvalue}>
       {props.children}
     </Shopcontext.Provider>
   );
 };
+
 export default Shopcontextprovider;

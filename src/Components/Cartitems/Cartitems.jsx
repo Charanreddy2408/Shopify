@@ -1,12 +1,11 @@
-import  { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import "./Cartitems.css";
 import { Shopcontext } from "../../context/Shopcontext";
 import removeicon from "../Assests/cart_cross_icon.png";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-  import offers from "../Assests/offers";
+import offers from "../Assests/offers"; // Keep this if offers are used
 import { Link } from "react-router-dom";
-// import emailjs from "emailjs-com"; // Commented out for troubleshooting
 import { ThemeContext } from '../ThemeContext/ThemeContext'; 
 
 const Cartitems = () => {
@@ -59,15 +58,6 @@ const Cartitems = () => {
         total: product.new_price * cartItems[product.id],
       }));
   
-      // const productItems = products.map((product) => `
-      //   <li>
-      //     ${product.name}<br>
-      //     Quantity: ${product.quantity}<br>
-      //     Unit Price: $${product.price}<br>
-      //     Total: $${product.total}
-      //   </li>
-      // `).join('');
-  
       const templateParams = {
         to_name: user.name,
         to_email: user.email,
@@ -75,26 +65,9 @@ const Cartitems = () => {
         total_amount: discountedTotal,
       };
   
-      console.log('Template Params:', templateParams);
+      // console.log('Template Params:', templateParams); // Commented out to resolve the console warning
 
-      // Commented out to troubleshoot potential issues with email sending
-      /*
-      try {
-        await emailjs.send(
-          "service_j1jadl7", 
-          "template_mcm58sj", 
-          templateParams,
-          "MU2-rw7oEId1SCy-x" 
-        );
-
-        toast.success("Order placed and confirmation email sent", { autoClose: 3000 });
-      } catch (error) {
-        console.error("Error sending email:", error);
-        toast.error("Error sending order confirmation email", { autoClose: 3000 });
-      } finally {
-        setSendingEmail(false);
-      }
-      */
+      // Email sending logic can remain commented out for troubleshooting
     }
   };
 
