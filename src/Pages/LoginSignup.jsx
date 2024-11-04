@@ -35,7 +35,7 @@ const LoginSignup = () => {
       [name]: type === "checkbox" ? checked : value,
     });
 
-    // Clear error messages when the user starts typing
+   
     setErrors({
       ...errors,
       [name]: "",
@@ -80,7 +80,7 @@ const LoginSignup = () => {
       return;
     }
 
-    // Store user data in local storage
+ 
     localStorage.setItem(
       "user",
       JSON.stringify({

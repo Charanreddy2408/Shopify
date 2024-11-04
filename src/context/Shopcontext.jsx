@@ -1,6 +1,6 @@
 import React, { useState, createContext } from "react";
 import all_product from "../Components/Assests/all_product";
-import { useSearchParams } from "react-router-dom";
+
 import Cartitems from "../Components/Cartitems/Cartitems";
 export const Shopcontext = createContext(null);
 const getDefaultcart = () => {
@@ -14,14 +14,11 @@ const Shopcontextprovider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultcart());
 
   const addtocart = (itemid) => {
-    console.log(itemid,cartItems[itemid],"dd")
     setCartItems(() => ({ ...cartItems, [itemid]: cartItems[itemid] + 1 }));
-    console.log(cartItems);
   };
   const removefromcart = (itemid) => {
-    
     setCartItems((prev) => ({ ...prev, [itemid]: prev[itemid] - 1 }));
-    console.log(cartItems);
+    
   };
   const gettotalcartamount = () => {
     let totalamount = 0;

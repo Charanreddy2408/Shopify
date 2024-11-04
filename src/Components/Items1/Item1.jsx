@@ -9,7 +9,6 @@ const Item1 = (props) => {
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    
     setTimeout(() => {
       setLoading(false);
     }, 1000); 

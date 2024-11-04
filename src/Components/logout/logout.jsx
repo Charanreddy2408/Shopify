@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const LogoutButton = () => {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     localStorage.removeItem("login");
     toast.success("Logout Successful", { autoClose: 3000 });

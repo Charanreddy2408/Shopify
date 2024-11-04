@@ -52,7 +52,6 @@ const Loginpage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -69,7 +68,7 @@ const Loginpage = () => {
         user.password === data.password
       ) {
         toast.success("Login Successful", { autoClose: 3000 });
-        navigate("/home");
+        navigate("/");
         localStorage.setItem(
           "login",
           JSON.stringify({
