@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Css/Shopcategory.css";
 import { Shopcontext } from "../context/Shopcontext";
-import dropdown from "../Components/Assests/dropdown_icon.png";
+// import dropdown from "../Components/Assests/dropdown_icon.png";
 import Item1 from "../Components/Items1/Item1";
 
 const ShopCategory = (props) => {
