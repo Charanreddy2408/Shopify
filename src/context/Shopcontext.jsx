@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 import all_product from "../Components/Assests/all_product";
-import { useSearchParams } from "react-router-dom";
-import Cartitems from "../Components/Cartitems/Cartitems";
+// import { useSearchParams } from "react-router-dom";
+// import Cartitems from "../Components/Cartitems/Cartitems";
 export const Shopcontext = createContext(null);
 const getDefaultcart = () => {
   let cart = {};
