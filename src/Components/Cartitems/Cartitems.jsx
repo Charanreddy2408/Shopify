@@ -15,6 +15,7 @@ const Cartitems = () => {
   const [valid, setValid] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [sendingEmail, setSendingEmail] = useState(false);
+
   const { theme } = useContext(ThemeContext); 
 
   const handleInput = (e) => setPromo(e.target.value);
@@ -44,13 +45,18 @@ const Cartitems = () => {
     return user && user.name !== "";
   };
 
-  const handleCheckoutClick = async () => {
+  const handleCheckoutClick = () => {
+    if (gettotalcartamount() === 0) {
+      toast.error("Your cart is empty!", { autoClose: 3000 });
+      return; // Early return if the cart is empty
+    }
+
     if (!checkLogin()) {
       toast.error("Login required to proceed to checkout", { autoClose: 3000 });
       return; // Early return if not logged in
     }
 
-    setSendingEmail(true);
+    setSendingEmail(true); // Start processing state
 
     const user = JSON.parse(localStorage.getItem("login"));
     const products = all_product.filter((product) => cartItems[product.id] > 0).map((product) => ({
@@ -60,28 +66,11 @@ const Cartitems = () => {
       total: product.new_price * cartItems[product.id],
     }));
 
-    // Commented out for now, remove if not needed
-    /*
-    const templateParams = {
-      to_name: user.name,
-      to_email: user.email,
-      from_name: "charan",
-      total_amount: discountedTotal,
-    };
-    */
+    // You can implement the order processing logic here if needed
 
-    // Uncomment for email functionality later
-    /*
-    try {
-      await emailjs.send("service_j1jadl7", "template_mcm58sj", templateParams, "MU2-rw7oEId1SCy-x");
-      toast.success("Order placed and confirmation email sent", { autoClose: 3000 });
-    } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error("Error sending order confirmation email", { autoClose: 3000 });
-    } finally {
-      setSendingEmail(false);
-    }
-    */
+    toast.success("Order placed successfully", { autoClose: 3000 });
+
+    setSendingEmail(false); // End processing state
   };
 
   return (
@@ -166,7 +155,7 @@ const Cartitems = () => {
               value={promo}
               onChange={handleInput}
             />
-            <button onClick={handleApplyDiscount} disabled={sendingEmail}>
+            <button onClick={handleApplyDiscount}>
               Apply
             </button>
           </div>
@@ -177,4 +166,3 @@ const Cartitems = () => {
 };
 
 export default Cartitems;
-
