@@ -19,5 +19,5 @@ root.render(
     </Shopcontextprovider>
   </React.StrictMode>
 );
-
+//index.js
 reportWebVitals();
